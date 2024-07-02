@@ -11,6 +11,7 @@ import "./assets/css/HienThi.css";
 const propo = 1.25;
 const mainScorePropo = 3.5;
 const subTitle = "h6";
+const imTitle = "h3";
 const mainTitle = "h1";
 
 function HienThi(props) {
@@ -22,10 +23,10 @@ function HienThi(props) {
         <Grid item xs={propo} className='do'>
           {/* Layout bên dọc trái */}
           <Typography variant={mainTitle} className='heading flag'>.</Typography>
-          <Typography variant="h3" className='center score'>{red_user.team}</Typography>
+          <Typography variant={imTitle} className='center score'>{red_user.team}</Typography>
           <Typography variant={subTitle} className='footer'>
             <Typography variant={subTitle} className='center' >Gam-Jeom</Typography>
-            <Typography variant="h3" className='center'>{red_user.gam_jeom}</Typography>
+            <Typography variant={imTitle} className='center'>{red_user.gam_jeom}</Typography>
           </Typography>
         </Grid>
         <Grid item xs={12 - 2 * propo}>
@@ -42,10 +43,10 @@ function HienThi(props) {
             <Grid item xs={(12 - mainScorePropo) / 2} className='do_dam'>
               <Typography style={{
                 fontSize : "15rem"
-              }} variant={mainTitle} component="h1">0</Typography>
+              }} variant={mainTitle} component={mainTitle}>0</Typography>
             </Grid>
             <Grid item xs={mainScorePropo} className='den'>
-              <Typography variant="h3" className='center' style={{
+              <Typography variant={imTitle} className='center' style={{
                 fontSize : "2.5rem"
               }}>MATCH</Typography>
               <Typography variant="h2" className='center'>{match}</Typography>
@@ -53,7 +54,7 @@ function HienThi(props) {
                 className='center time'>
                   <span style={{ fontSize : "6.5rem" }} >{time}</span>
                   <Typography 
-                    variant="h3"
+                    variant={imTitle}
                     style={{ backgroundColor : "#F8F905", color : "black", textTransform : "uppercase" }}>
                       Time out
                   </Typography>
@@ -62,7 +63,7 @@ function HienThi(props) {
             <Grid item xs={(12 - mainScorePropo) / 2} className='xanh_dam'>
               <Typography style={{
                 fontSize : "15rem"
-              }} variant={mainTitle} component="h1" >0</Typography>
+              }} variant={mainTitle} component={mainTitle} >0</Typography>
             </Grid>
           </Grid>
           <Grid container className='footer'>
@@ -70,27 +71,27 @@ function HienThi(props) {
               <Grid container>
                 <Grid item xs={6}>
                   <Typography variant={subTitle} className='center green' >Won</Typography>
-                  <Typography variant="h3" className='center green'>{red_user.won}</Typography>
+                  <Typography variant={imTitle} className='center green'>{red_user.won}</Typography>
                 </Grid>
                 <Grid item xs={6}>
                   <Typography variant={subTitle} className='center green' >Hits</Typography>
-                  <Typography variant="h3" className='center green'>{red_user.hits}</Typography>
+                  <Typography variant={imTitle} className='center green'>{red_user.hits}</Typography>
                 </Grid>
               </Grid>
             </Grid>
             <Grid item xs={mainScorePropo} className='den'>
-              <Typography variant="h4" className='center'>ROUND</Typography>
-              <Typography variant="h3" className='center'>{round}</Typography>
+              <Typography variant={imTitle} className='center'>ROUND</Typography>
+              <Typography variant={imTitle} className='center'>{round}</Typography>
             </Grid>
             <Grid item xs={(12 - mainScorePropo) / 2} className='xanh'>
               <Grid container>
                 <Grid item xs={6}>
                   <Typography variant={subTitle} className='center green' >Hits</Typography>
-                  <Typography variant="h3" className='center green'>{blue_user.hits}</Typography>
+                  <Typography variant={imTitle} className='center green'>{blue_user.hits}</Typography>
                 </Grid>
                 <Grid item xs={6}>
                   <Typography variant={subTitle} className='center green' >Won</Typography>
-                  <Typography variant="h3" className='center green'>{blue_user.won}</Typography>
+                  <Typography variant={imTitle} className='center green'>{blue_user.won}</Typography>
                 </Grid>
               </Grid>
             </Grid>
@@ -99,10 +100,10 @@ function HienThi(props) {
         <Grid item xs={propo} className='xanh'>
           {/* Layout bên dọc phải */}
           <Typography variant={mainTitle} className='flag heading'>.</Typography>
-          <Typography variant="h3" className='center score'>{blue_user.team}</Typography>
+          <Typography variant={imTitle} className='center score'>{blue_user.team}</Typography>
           <Typography variant={subTitle} className='footer'>
             <Typography variant={subTitle} className='center' >Gam-Jeom</Typography>
-            <Typography variant="h3" className='center'>{blue_user.gam_jeom}</Typography>
+            <Typography variant={imTitle} className='center'>{blue_user.gam_jeom}</Typography>
           </Typography>
         </Grid>
       </Grid>
