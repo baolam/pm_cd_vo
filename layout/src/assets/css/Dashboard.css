@@ -1,0 +1,14 @@
+.dashboard_center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dashboard_heading {
+  font-weight: bold !important;
+  font-size: 1.5rem !important;
+}
+
+.custom_tf {
+  width: 75px;
+}
