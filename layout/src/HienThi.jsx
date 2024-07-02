@@ -9,9 +9,9 @@ import "./assets/css/HienThi.css";
 
 // Tỉ lệ giao diện
 const propo = 1.25;
-const subTitle = "h5";
-const imContent = "h3";
-const mainTitle = "h2";
+const mainScorePropo = 3.5;
+const subTitle = "h6";
+const mainTitle = "h1";
 
 function HienThi(props) {
   const { red_user, blue_user, match, round, time } = props;
@@ -22,10 +22,10 @@ function HienThi(props) {
         <Grid item xs={propo} className='do'>
           {/* Layout bên dọc trái */}
           <Typography variant={mainTitle} className='heading flag'>.</Typography>
-          <Typography variant={imContent} className='center score'>CLB</Typography>
+          <Typography variant="h3" className='center score'>{red_user.team}</Typography>
           <Typography variant={subTitle} className='footer'>
             <Typography variant={subTitle} className='center' >Gam-Jeom</Typography>
-            <Typography variant={imContent} className='center'>{red_user.gam_jeom}</Typography>
+            <Typography variant="h3" className='center'>{red_user.gam_jeom}</Typography>
           </Typography>
         </Grid>
         <Grid item xs={12 - 2 * propo}>
@@ -39,52 +39,58 @@ function HienThi(props) {
             </Grid>
           </Grid>
           <Grid container className='score'>
-            <Grid item xs={5} className='do_dam'>
-              <Typography variant={mainTitle} component="h1" className='num_score'>0</Typography>
+            <Grid item xs={(12 - mainScorePropo) / 2} className='do_dam'>
+              <Typography style={{
+                fontSize : "15rem"
+              }} variant={mainTitle} component="h1">0</Typography>
             </Grid>
-            <Grid item xs={2} className='den'>
-              <Typography variant={subTitle} className='center'>MATCH</Typography>
-              <Typography variant={imContent} className='center'>{match}</Typography>
-              <Typography variant={mainTitle} style={{ color : "#F8F905", marginRight : "1px" }} 
+            <Grid item xs={mainScorePropo} className='den'>
+              <Typography variant="h3" className='center' style={{
+                fontSize : "2.5rem"
+              }}>MATCH</Typography>
+              <Typography variant="h2" className='center'>{match}</Typography>
+              <Typography variant="h2" style={{ color : "#F8F905", marginRight : "1px" }} 
                 className='center time'>
-                  {time}
+                  <span style={{ fontSize : "6.5rem" }} >{time}</span>
                   <Typography 
-                    variant={imContent} 
-                    style={{ backgroundColor : "#F8F905", color : "black" }}>
+                    variant="h3"
+                    style={{ backgroundColor : "#F8F905", color : "black", textTransform : "uppercase" }}>
                       Time out
                   </Typography>
                 </Typography>
             </Grid>
-            <Grid item xs={5} className='xanh_dam'>
-              <Typography variant={mainTitle} component="h1" className='num_score'>0</Typography>
+            <Grid item xs={(12 - mainScorePropo) / 2} className='xanh_dam'>
+              <Typography style={{
+                fontSize : "15rem"
+              }} variant={mainTitle} component="h1" >0</Typography>
             </Grid>
           </Grid>
           <Grid container className='footer'>
-            <Grid item xs={5} className='do'>
+            <Grid item xs={(12 - mainScorePropo) / 2} className='do'>
               <Grid container>
                 <Grid item xs={6}>
-                  <Typography variant={subTitle} className='center' >Won</Typography>
-                  <Typography variant={imContent} className='center'>{red_user.won}</Typography>
+                  <Typography variant={subTitle} className='center green' >Won</Typography>
+                  <Typography variant="h3" className='center green'>{red_user.won}</Typography>
                 </Grid>
                 <Grid item xs={6}>
-                  <Typography variant={subTitle} className='center' >Hits</Typography>
-                  <Typography variant={imContent} className='center'>{red_user.hits}</Typography>
+                  <Typography variant={subTitle} className='center green' >Hits</Typography>
+                  <Typography variant="h3" className='center green'>{red_user.hits}</Typography>
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={2} className='den'>
-              <Typography variant={subTitle} className='center'>ROUND</Typography>
-              <Typography variant={imContent} className='center'>{round}</Typography>
+            <Grid item xs={mainScorePropo} className='den'>
+              <Typography variant="h4" className='center'>ROUND</Typography>
+              <Typography variant="h3" className='center'>{round}</Typography>
             </Grid>
-            <Grid item xs={5} className='xanh'>
+            <Grid item xs={(12 - mainScorePropo) / 2} className='xanh'>
               <Grid container>
                 <Grid item xs={6}>
-                  <Typography variant={subTitle} className='center' >Hits</Typography>
-                  <Typography variant={imContent} className='center'>{blue_user.hits}</Typography>
+                  <Typography variant={subTitle} className='center green' >Hits</Typography>
+                  <Typography variant="h3" className='center green'>{blue_user.hits}</Typography>
                 </Grid>
                 <Grid item xs={6}>
-                  <Typography variant={subTitle} className='center' >Won</Typography>
-                  <Typography variant={imContent} className='center'>{blue_user.won}</Typography>
+                  <Typography variant={subTitle} className='center green' >Won</Typography>
+                  <Typography variant="h3" className='center green'>{blue_user.won}</Typography>
                 </Grid>
               </Grid>
             </Grid>
@@ -93,10 +99,10 @@ function HienThi(props) {
         <Grid item xs={propo} className='xanh'>
           {/* Layout bên dọc phải */}
           <Typography variant={mainTitle} className='flag heading'>.</Typography>
-          <Typography variant={imContent} className='center score'>CLB</Typography>
+          <Typography variant="h3" className='center score'>{blue_user.team}</Typography>
           <Typography variant={subTitle} className='footer'>
             <Typography variant={subTitle} className='center' >Gam-Jeom</Typography>
-            <Typography variant={imContent} className='center'>{blue_user.gam_jeom}</Typography>
+            <Typography variant="h3" className='center'>{blue_user.gam_jeom}</Typography>
           </Typography>
         </Grid>
       </Grid>

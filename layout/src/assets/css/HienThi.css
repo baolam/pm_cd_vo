@@ -2,6 +2,8 @@
 *, body {
   margin: 0;
   padding: 0;
+  font-family: "utm_neutraregular" !important;
+  font-weight: bold !important;
 }
 
 html, body {
@@ -23,15 +25,19 @@ html, body {
 }
 
 .do {
-  background-color: #F6775B;
+  background-color: #ff7081;
 }
 
 .xanh {
   background-color: #1C5AFC;
 }
 
+.green {
+  color: #3cd247;
+}
+
 .do_dam {
-  background-color: #FF8266;
+  background-color: #ff2c2c;
 }
 
 .xanh_dam {
@@ -61,17 +67,17 @@ html, body {
   justify-content: center;
 }
 
-.num_score {
-  font-size: 10rem !important;
-}
+/* .num_score {
+  font-size: 15rem;
+} */
 
 .time {
   border: 5px solid #F8F905;
   font-size: 5rem !important;
-  margin-top: 12vh !important;
+  margin-top: 8vh !important;
 }
 
 .footer {
   border-top: 1px solid white;
-  height: 17vh;
+  height: 20vh;
 }
