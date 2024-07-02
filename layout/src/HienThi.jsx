@@ -15,7 +15,7 @@ const imTitle = "h3";
 const mainTitle = "h1";
 
 function HienThi(props) {
-  const { red_user, blue_user, match, round, time } = props;
+  const { red_user, blue_user, match, round, time, pauseTime } = props;
 
   return (
     <>
@@ -50,14 +50,16 @@ function HienThi(props) {
                 fontSize : "2.5rem"
               }}>MATCH</Typography>
               <Typography variant="h2" className='center'>{match}</Typography>
-              <Typography variant="h2" style={{ color : "#F8F905", marginRight : "1px" }} 
+              <Typography variant="h2" style={{ color : pauseTime ? "#F8F905" : "white", marginRight : "1px" }} 
                 className='center time'>
                   <span style={{ fontSize : "6.5rem" }} >{time}</span>
-                  <Typography 
-                    variant={imTitle}
-                    style={{ backgroundColor : "#F8F905", color : "black", textTransform : "uppercase" }}>
-                      Time out
-                  </Typography>
+                  {pauseTime && 
+                    <Typography 
+                      variant={imTitle}
+                      style={{ backgroundColor : "#F8F905", color : "black", textTransform : "uppercase" }}>
+                        Time out
+                    </Typography>
+                  }
                 </Typography>
             </Grid>
             <Grid item xs={(12 - mainScorePropo) / 2} className='xanh_dam'>
@@ -111,15 +113,20 @@ function HienThi(props) {
   )
 }
 
+/**
+ * Cấu trúc của một user
+ * {
+ *  name : ...,
+ *  gam_jeom : ....,
+ *  hits : ....,
+ *  won : ...,
+ *  team : ...
+ * }
+ * 
+ */
 HienThi.defaultProps = {
-  red_user : {
-    name : "H1"
-  },
-  blue_user : {
-    name : "H2"
-  },
   time : "2:00",
-  black_time : false,
+  pauseTime : false,
   match : 100,
   round : 1
 }
@@ -128,7 +135,7 @@ HienThi.propTypes = {
   red_user : PropTypes.object.isRequired,
   blue_user : PropTypes.object.isRequired,
   time : PropTypes.string.isRequired, // Thời gian đếm ngược
-  // black_time : PropTypes.bool.isRequired, // Trạng thái thời gian nhấp nháy
+  pauseTime : PropTypes.bool.isRequired,
   match : PropTypes.number.isRequired, // Trận đấu bao nhiêu
   round : PropTypes.number.isRequired // Vòng nào
 }

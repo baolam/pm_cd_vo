@@ -1,3 +1,5 @@
 won --> số hiệp đã thắng (round)
 hit --> số cú đánh trúng (điểm tăng)
 gam_jeom --> lỗi (1 lỗi, bù điểm đối phương)
+
+/// Một trận gồm nhiều hiệp (round)
