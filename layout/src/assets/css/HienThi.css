@@ -1,0 +1,77 @@
+/* Cài đặt mặc định */
+*, body {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+.heading {
+  border-bottom: 1px solid white;
+}
+
+.center {
+  text-align: center;
+}
+
+/* Cài đặt màu */
+.do, .xanh, .den, .do_dam, .xanh_dam {
+  border: 1px solid white;
+  color: white;
+}
+
+.do {
+  background-color: red;
+}
+
+.xanh {
+  background-color: blue;
+}
+
+.do_dam {
+  background-color: darkred;
+}
+
+.xanh_dam {
+  background-color: darkblue;
+}
+
+.den {
+  background-color: black;
+}
+
+.flag {
+  background-image: url("../img/quoc_ky.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 0px;
+  color: transparent;
+}
+
+.score {
+  height: 70vh;
+}
+
+.score .do_dam,
+.score .xanh_dam {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.num_score {
+  font-size: 10rem !important;
+}
+
+.time {
+  border: 1px solid yellow;
+  font-size: 5rem !important;
+  margin-top: 12vh !important;
+}
+
+.footer {
+  border-top: 1px solid white;
+  height: 17vh;
+}
