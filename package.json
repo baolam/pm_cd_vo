@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ."
   },
   "author": "Nguyễn Đức Bảo Lâm",
   "license": "ISC",
@@ -12,6 +13,7 @@
     "express": "^4.19.2",
     "http": "^0.0.1-security",
     "ip": "^2.0.1",
+    "nodemon": "^3.1.4",
     "socket.io": "^4.7.5"
   }
 }

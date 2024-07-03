@@ -1,28 +1,38 @@
 import React from "react";
-import HienThi from "./HienThi";
 import Dashboard from "./Dashboard";
+import ShowScreen from "./ShowScreen";
 
 export default function MainScreen() {
+  const onStart = () => {
+    console.log("Bắt đầu");
+  };
+
+  const onEnd = () => {
+    console.log("Kết thúc");
+  };
+
+  const onStopForCaring = () => {
+    console.log("Dừng săn sóc");
+  };
+
+  const onStopForConsidering = () => {
+    console.log("Dừng xem xét");
+  };
+
+  const onRestart = () => {
+    console.log("Bắt đầu lại");
+  };
+
   return (
     <>
-      <HienThi
-        red_user={{
-          name: "H1",
-          gam_jeom: 0,
-          hits: 1,
-          won: 1,
-        }}
-        blue_user={{
-          name: "H2",
-          gam_jeom: 0,
-          hits: 1,
-          won: 1,
-        }}
-        match={100}
-        round={1}
-        time="2:00"
+      <ShowScreen />
+      <Dashboard 
+        onStart={onStart} 
+        onEnd={onEnd} 
+        onStopForCaring={onStopForCaring} 
+        onStopForConsidering={onStopForConsidering}
+        onRestart={onRestart}
       />
-      <Dashboard />
     </>
   );
 }

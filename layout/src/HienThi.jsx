@@ -18,16 +18,16 @@ function HienThi(props) {
   const { red_user, blue_user, match, round, time, pauseTime } = props;
 
   return (
-    <>
+    <div className='hien_thi'>
       <Grid container>
         <Grid item xs={propo} className='do'>
           {/* Layout bên dọc trái */}
           <Typography variant={mainTitle} className='heading flag'>.</Typography>
           <Typography variant={imTitle} className='center score'>{red_user.team}</Typography>
-          <Typography variant={subTitle} className='footer'>
+          <div className='footer'>
             <Typography variant={subTitle} className='center' >Gam-Jeom</Typography>
             <Typography variant={imTitle} className='center'>{red_user.gam_jeom}</Typography>
-          </Typography>
+          </div>
         </Grid>
         <Grid item xs={12 - 2 * propo}>
           {/* Layout chính giữa (hiển thị điểm) */}
@@ -103,13 +103,13 @@ function HienThi(props) {
           {/* Layout bên dọc phải */}
           <Typography variant={mainTitle} className='flag heading'>.</Typography>
           <Typography variant={imTitle} className='center score'>{blue_user.team}</Typography>
-          <Typography variant={subTitle} className='footer'>
+          <div className='footer'>
             <Typography variant={subTitle} className='center' >Gam-Jeom</Typography>
             <Typography variant={imTitle} className='center'>{blue_user.gam_jeom}</Typography>
-          </Typography>
+          </div>
         </Grid>
       </Grid>
-    </>
+    </div>
   )
 }
 
@@ -124,12 +124,6 @@ function HienThi(props) {
  * }
  * 
  */
-HienThi.defaultProps = {
-  time : "2:00",
-  pauseTime : false,
-  match : 100,
-  round : 1
-}
 
 HienThi.propTypes = {
   red_user : PropTypes.object.isRequired,
