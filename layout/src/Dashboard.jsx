@@ -22,6 +22,9 @@ function Dashboard(props) {
   const secondRound = useRef();
   const scoreForStopFourRound = useRef(); // Điểm dừng hiệp
   const timeForPrep = useRef(); // Thời gian nghỉ giữa hiệp
+  const round = useRef();
+  const againMinuteRound = useRef();
+  const againSecondRound = useRef();
   const { 
     onStart, 
     onEnd, 
@@ -102,14 +105,16 @@ function Dashboard(props) {
         <Grid item xs={6}>
           <Typography variant='h4' className='center'>Thời gian</Typography>
           <Typography variant='h5' className='center'>
-            Đặt lại hiệp <select>
+            {/* Thông tin object rời (dùng để set trận đấu khi đặt lại được ấn -->
+            chỉ cài cho đặt lại) */}
+            Đặt lại hiệp <select ref={round}>
               <option>1</option>
               <option>2</option>
               <option>3</option>
               <option>4</option>
-              </select> phút <select>
+              </select> phút <select ref={againMinuteRound}>
                 <Minutes />
-              </select> giây <select>
+              </select> giây <select ref={againSecondRound}>
                 <Seconds />
             </select>
           </Typography>
@@ -119,7 +124,14 @@ function Dashboard(props) {
             </select>
           </Typography>
           <Button
-            onClick={onRestart} 
+            onClick={
+              () => {
+                onRestart({
+                  round : round.current.value,
+                  time : Number(againMinuteRound.current.value) * 60 + Number(againSecondRound.current.value)
+                })
+              }
+            } 
             variant='contained' 
             fullWidth 
             color='error'>Bắt đầu lại</Button>
