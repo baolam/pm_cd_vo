@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types';
 import { 
   Button, 
@@ -24,7 +24,9 @@ function Dashboard(props) {
     onStopForCaring, 
     onStopForConsidering, 
     onClearScore,
-    onRestart 
+    onRestart,
+    onChangeScore,
+    onChangeJamJeom 
   } = props;
 
   return (
@@ -145,6 +147,7 @@ function Dashboard(props) {
             </TableRow>
           </TableHead>
           <TableBody>
+            {/* Màu đỏ */}
             <TableRow>
               <TableCell align='center' style={{ color : "red", fontWeight : "bold", fontSize : "1rem" }} >Đỏ</TableCell>
               <TableCell>
@@ -156,13 +159,25 @@ function Dashboard(props) {
                     <TextField type='number' defaultValue={0} className='custom_tf' />
                   </Grid>
                   <Grid item className='dashboard_center'>
-                    <Button variant='contained'>+</Button>
+                    <Button onClick={
+                      () => {
+                        onChangeScore("R", 1)
+                      }
+                    } variant='contained'>+</Button>
                   </Grid>
                   <Grid item className='dashboard_center'>
-                    <Button>- -</Button>
+                    <Button onClick={
+                      () => {
+                        onChangeScore("R", -1)
+                      }
+                    }>- -</Button>
                   </Grid>
                   <Grid item className='dashboard_center'>
-                    <Button>- - - -</Button>
+                    <Button onClick={
+                      () => {
+                        onChangeScore("R", -1)
+                      }
+                    }>- - - -</Button>
                   </Grid>
                 </Grid>
               </TableCell>
@@ -172,14 +187,23 @@ function Dashboard(props) {
                     <TextField type='number' defaultValue={0} className='custom_tf' />
                   </Grid>
                   <Grid item className='dashboard_center'>
-                    <Button variant='contained'>+</Button>
+                    <Button onClick={
+                      () => {
+                        onChangeJamJeom("B", 1);
+                      }
+                    } variant='contained'>+</Button>
                   </Grid>
                   <Grid item className='dashboard_center'>
-                    <Button>- -</Button>
+                    <Button onClick={
+                      () => {
+                        onChangeJamJeom("B", -1);
+                      }
+                    }>- -</Button>
                   </Grid>
                 </Grid>
               </TableCell>
             </TableRow>
+            {/* Màu xanh */}
             <TableRow>
               <TableCell align='center' style={{ color : "blue", fontWeight : "bold", fontSize : "1rem" }}>Xanh</TableCell>
               <TableCell>
@@ -191,13 +215,25 @@ function Dashboard(props) {
                     <TextField type='number' defaultValue={0} className='custom_tf' />
                   </Grid>
                   <Grid item className='dashboard_center'>
-                    <Button variant='contained'>+</Button>
+                    <Button onClick={
+                      () => {
+                        onChangeScore("B", 1)
+                      }
+                    } variant='contained'>+</Button>
                   </Grid>
                   <Grid item className='dashboard_center'>
-                    <Button>- -</Button>
+                    <Button onClick={
+                      () => {
+                        onChangeScore("B", -1);
+                      }
+                    }>- -</Button>
                   </Grid>
                   <Grid item className='dashboard_center'>
-                    <Button>- - - -</Button>
+                    <Button onClick={
+                      () => {
+                        onChangeScore("B", -1);
+                      }
+                    }>- - - -</Button>
                   </Grid>
                 </Grid>
               </TableCell>
@@ -207,10 +243,18 @@ function Dashboard(props) {
                     <TextField type='number' defaultValue={0} className='custom_tf' />
                   </Grid>
                   <Grid item className='dashboard_center'>
-                    <Button variant='contained'>+</Button>
+                    <Button onClick={
+                      () => {
+                        onChangeJamJeom("B", 1);
+                      }
+                    } variant='contained'>+</Button>
                   </Grid>
                   <Grid item className='dashboard_center'>
-                    <Button>- -</Button>
+                    <Button onClick={
+                      () => {
+                        onChangeJamJeom("B", -1);
+                      }
+                    }>- -</Button>
                   </Grid>
                 </Grid>
               </TableCell>
@@ -227,7 +271,10 @@ Dashboard.propTypes = {
   onEnd : PropTypes.func.isRequired,
   onStopForCaring : PropTypes.func.isRequired,
   onStopForConsidering : PropTypes.func.isRequired,
-  onRestart : PropTypes.func.isRequired
+  onRestart : PropTypes.func.isRequired,
+  onClearScore : PropTypes.func.isRequired,
+  onChangeScore : PropTypes.func.isRequired,
+  onChangeJamJeom : PropTypes.func.isRequired
 };
 
 export default Dashboard;

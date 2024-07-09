@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Dashboard from "./Dashboard";
 import ShowScreen from "./ShowScreen";
+import { socket } from "./socket";
 
-export default function MainScreen() {
+function MainScreen() {
   const onStart = () => {
     console.log("Bắt đầu");
   };
@@ -23,6 +24,18 @@ export default function MainScreen() {
     console.log("Bắt đầu lại");
   };
 
+  const onClearScore = () => {
+    console.log("Xóa điểm");
+  };
+
+  const onChangeScore = (user, point) => {
+
+  };
+
+  const onChangeJamJeom = (user, error) => {
+
+  }
+
   return (
     <>
       <ShowScreen />
@@ -32,7 +45,12 @@ export default function MainScreen() {
         onStopForCaring={onStopForCaring} 
         onStopForConsidering={onStopForConsidering}
         onRestart={onRestart}
+        onClearScore={onClearScore}
+        onChangeScore={onChangeScore}
+        onChangeJamJeom={onChangeJamJeom}
       />
     </>
   );
 }
+
+export default MainScreen;
