@@ -20,6 +20,8 @@ import Seconds from './components/Seconds';
 function Dashboard(props) {
   const minuteRound = useRef();
   const secondRound = useRef();
+  const scoreForStopFourRound = useRef(); // Điểm dừng hiệp
+  const timeForPrep = useRef(); // Thời gian nghỉ giữa hiệp
   const { 
     onStart, 
     onEnd, 
@@ -30,6 +32,14 @@ function Dashboard(props) {
     onChangeScore,
     onChangeGamJeom 
   } = props;
+
+  const gatherInput = () => {
+    return {
+      timeRound : Number(minuteRound.current.value) * 60 + Number(secondRound.current.value),
+      round_4 : Number(scoreForStopFourRound.current.value),
+      preparation_time : Number(timeForPrep.current.value)
+    }
+  };
 
   return (
     <>
@@ -45,9 +55,9 @@ function Dashboard(props) {
                 <Button 
                   onClick={
                     () => {
-                      console.log(minuteRound.current.value);
-                      console.log(secondRound.current.value);
-                      onStart();
+                      // console.log(minuteRound.current.value);
+                      // console.log(secondRound.current.value);
+                      onStart(gatherInput());
                     }
                   }
                   fullWidth 
@@ -104,7 +114,7 @@ function Dashboard(props) {
             </select>
           </Typography>
           <Typography variant='h5' className='center'>
-            Điểm dừng hiệp 4: <select>
+            Điểm dừng hiệp 4: <select ref={scoreForStopFourRound}>
               <Minutes />
             </select>
           </Typography>
@@ -134,7 +144,7 @@ function Dashboard(props) {
             </Grid>
           </Grid>
           <Typography variant='h5' className='center'>Nghỉ giữa hiệp:
-            <select defaultValue={"60"}>
+            <select defaultValue={"60"} ref={timeForPrep}>
               <option value="15">Thử 15 giây</option>
               <option value="30">30 giây</option>
               <option value="45">45 giây</option>

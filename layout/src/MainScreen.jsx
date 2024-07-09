@@ -4,8 +4,9 @@ import ShowScreen from "./ShowScreen";
 import { socket } from "./socket";
 
 function MainScreen() {
-  const onStart = () => {
-    console.log("Bắt đầu");
+  const onStart = (advance_input) => {
+    console.log("Bắt đầu trận đấu");
+    socket.emit("start_round", advance_input);
   };
 
   const onEnd = () => {
