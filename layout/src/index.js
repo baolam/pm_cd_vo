@@ -7,11 +7,11 @@ import NotFound from "./NotFound";
 
 const router = createBrowserRouter([
   {
-    path: "/hien_thi",
+    path: "/hienthi.htm",
     element: <ShowScreen />,
   },
   {
-    path: "/cham_diem",
+    path: "/chamdiem.htm",
     element: <MainScreen />,
   },
   {

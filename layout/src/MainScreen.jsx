@@ -32,7 +32,7 @@ function MainScreen() {
 
   };
 
-  const onChangeJamJeom = (user, error) => {
+  const onChangeGamJeom = (user, error) => {
 
   }
 
@@ -47,7 +47,7 @@ function MainScreen() {
         onRestart={onRestart}
         onClearScore={onClearScore}
         onChangeScore={onChangeScore}
-        onChangeJamJeom={onChangeJamJeom}
+        onChangeGamJeom={onChangeGamJeom}
       />
     </>
   );

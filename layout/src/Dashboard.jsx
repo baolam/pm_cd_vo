@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef } from 'react'
 import PropTypes from 'prop-types';
 import { 
   Button, 
@@ -18,6 +18,8 @@ import Minutes from './components/Minutes';
 import Seconds from './components/Seconds';
 
 function Dashboard(props) {
+  const minuteRound = useRef();
+  const secondRound = useRef();
   const { 
     onStart, 
     onEnd, 
@@ -26,7 +28,7 @@ function Dashboard(props) {
     onClearScore,
     onRestart,
     onChangeScore,
-    onChangeJamJeom 
+    onChangeGamJeom 
   } = props;
 
   return (
@@ -39,8 +41,15 @@ function Dashboard(props) {
           <Grid container spacing={2} marginBottom={2}>
             <Grid container item spacing={2}>
               <Grid item xs={6}>
+                {/* Cần cài đặt để gửi một số thông tin về server */}
                 <Button 
-                  onClick={onStart}
+                  onClick={
+                    () => {
+                      console.log(minuteRound.current.value);
+                      console.log(secondRound.current.value);
+                      onStart();
+                    }
+                  }
                   fullWidth 
                   variant='contained' 
                   color='secondary'
@@ -107,9 +116,9 @@ function Dashboard(props) {
           <Grid container>
             <Grid item xs={6}>
               <Typography variant='h5' className='center'>
-                Một hiệp: <select defaultValue={1}>
+                Một hiệp: <select ref={minuteRound} defaultValue={1}>
                   <Minutes />
-                </select> phút <select>
+                </select> phút <select ref={secondRound}>
                   <Seconds />
                 </select> giây
               </Typography>
@@ -189,14 +198,14 @@ function Dashboard(props) {
                   <Grid item className='dashboard_center'>
                     <Button onClick={
                       () => {
-                        onChangeJamJeom("B", 1);
+                        onChangeGamJeom("B", 1);
                       }
                     } variant='contained'>+</Button>
                   </Grid>
                   <Grid item className='dashboard_center'>
                     <Button onClick={
                       () => {
-                        onChangeJamJeom("B", -1);
+                        onChangeGamJeom("B", -1);
                       }
                     }>- -</Button>
                   </Grid>
@@ -245,14 +254,14 @@ function Dashboard(props) {
                   <Grid item className='dashboard_center'>
                     <Button onClick={
                       () => {
-                        onChangeJamJeom("B", 1);
+                        onChangeGamJeom("B", 1);
                       }
                     } variant='contained'>+</Button>
                   </Grid>
                   <Grid item className='dashboard_center'>
                     <Button onClick={
                       () => {
-                        onChangeJamJeom("B", -1);
+                        onChangeGamJeom("B", -1);
                       }
                     }>- -</Button>
                   </Grid>
@@ -274,7 +283,7 @@ Dashboard.propTypes = {
   onRestart : PropTypes.func.isRequired,
   onClearScore : PropTypes.func.isRequired,
   onChangeScore : PropTypes.func.isRequired,
-  onChangeJamJeom : PropTypes.func.isRequired
+  onChangeGamJeom : PropTypes.func.isRequired
 };
 
 export default Dashboard;
