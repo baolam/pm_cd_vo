@@ -5,38 +5,46 @@ import { socket } from "./socket";
 
 function MainScreen() {
   const onStart = (advanced_input) => {
-    console.log("Bắt đầu trận đấu");
+    // console.log("Bắt đầu trận đấu");
     socket.emit("start_round", advanced_input);
   };
 
   const onEnd = () => {
-    console.log("Kết thúc");
+    // console.log("Kết thúc");
     socket.emit("end_round");
   };
 
   const onStopForCaring = () => {
-    console.log("Dừng săn sóc");
+    // console.log("Dừng săn sóc");
+    socket.emit("caring");
   };
 
   const onStopForConsidering = () => {
-    console.log("Dừng xem xét");
+    // console.log("Dừng xem xét");
+    socket.emit("considering");
   };
 
   const onRestart = (advanced_input) => {
-    console.log("Bắt đầu lại");
+    // console.log("Bắt đầu lại");
     socket.emit("restart_round", advanced_input);
   };
 
   const onClearScore = () => {
-    console.log("Xóa điểm");
+    // console.log("Xóa điểm");
+    socket.emit("clear_score");
   };
 
-  const onChangeScore = (user, point) => {
-
+  const onChangeScore = (code, score) => {
+    socket.emit("update_score", {
+      code,
+      score 
+    })
   };
 
-  const onChangeGamJeom = (user, error) => {
-
+  const onChangeGamJeom = (code, error) => {
+    socket.emit("update_gam_jeom", {
+      code, error
+    });
   };
 
   return (
