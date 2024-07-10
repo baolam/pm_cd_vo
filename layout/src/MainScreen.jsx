@@ -1,16 +1,17 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Dashboard from "./Dashboard";
 import ShowScreen from "./ShowScreen";
 import { socket } from "./socket";
 
 function MainScreen() {
-  const onStart = (advance_input) => {
+  const onStart = (advanced_input) => {
     console.log("Bắt đầu trận đấu");
-    socket.emit("start_round", advance_input);
+    socket.emit("start_round", advanced_input);
   };
 
   const onEnd = () => {
     console.log("Kết thúc");
+    socket.emit("end_round");
   };
 
   const onStopForCaring = () => {
@@ -21,8 +22,9 @@ function MainScreen() {
     console.log("Dừng xem xét");
   };
 
-  const onRestart = () => {
+  const onRestart = (advanced_input) => {
     console.log("Bắt đầu lại");
+    socket.emit("restart_round", advanced_input);
   };
 
   const onClearScore = () => {
@@ -35,7 +37,7 @@ function MainScreen() {
 
   const onChangeGamJeom = (user, error) => {
 
-  }
+  };
 
   return (
     <>

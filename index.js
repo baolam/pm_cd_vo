@@ -38,7 +38,6 @@ function read_excel_file() {
         team: "CLB",
       },
       round: 1, // Thông tin tự cập nhật
-      pauseTime: false,
     },
   ];
 }
@@ -51,7 +50,15 @@ console.log("Hoàn thành xử lí");
 console.log("-----------------------------------------------------");
 
 // Thông tin dùng quản lí
+// --------------------------------------
+var timer; // Biến dùng để quản lí timeout
 var current_match = 0;
+var current_time = 0,
+  memory_time = 0;
+var preparation_time = 0;
+var round_4_score = 0;
+var pauseTime = false; // Biến làm nhấp nháy dấu : ở thời gian
+// ----------------------------------------
 
 app.use("/", express.static(__dirname + "/layout/build"));
 app.use((_req, res) => {
@@ -74,19 +81,61 @@ function updateInforScreen() {
 
 /**
  * @description
- * Bản thời gian cài đặt cho trận đấu
+ * Thủ tục xử lí thời gian thành chuỗi rồi gửi
  */
-function timerForMatch() {}
+function showTime() {
+  let second = current_time % 60;
+  let minute = (current_time - second) / 60;
+  let time = `${minute}:${second}`;
+  if (pauseTime) time = `${minute} ${second}`;
+  io.sockets.emit("time", time);
+}
+
+/**
+ * @description
+ * Hàm dùng để xử lí thời gian
+ */
+function processTimer() {
+  if (!pauseTime) {
+    current_time--;
+  }
+  if (current_time > 0) {
+    showTime();
+    pauseTime = !pauseTime;
+    timer = setTimeout(processTimer, 500);
+  } else {
+    current_time = memory_time;
+    matches[current_match].round++;
+    if (matches[current_match].round >= 3) {
+      // Tiến hành xử lí kết thúc trận đấu...
+      // Xử lí dựa vào tình trạng điểm số hiện tại
+      current_time = 0;
+    }
+  }
+}
 
 io.on("connection", (socket) => {
   console.log("Có kết nối từ người dùng!");
+
   socket.emit("match", {
     ...matches[current_match],
     match: {
       match: current_match + 1,
       round: matches[current_match].round,
-      pauseTime: matches[current_match].pauseTime,
+      pauseTime,
     },
+  });
+
+  socket.on("start_round", (infor) => {
+    current_time = infor.timeRound;
+    memory_time = infor.timeRound;
+    preparation_time = infor.preparation_time;
+    round_4_score = infor.round_4;
+    timer = setTimeout(processTimer, 500);
+  });
+
+  socket.on("end_round", () => {
+    clearTimeout(timer);
   });
 });
 

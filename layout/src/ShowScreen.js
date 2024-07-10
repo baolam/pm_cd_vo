@@ -24,14 +24,17 @@ function ShowScreen() {
   };
 
   useEffect(() => {
+    if (!socket.connected) socket.connect();
     socket.on("time", onSetTime);
     socket.on("match", onSetMatch);
 
     return () => {
       socket.off("time", onSetTime);
       socket.off("match", onSetMatch);
+      socket.disconnect();
     };
   }, []);
+
   return (
     <HienThi
       blue_user={blueInfor}

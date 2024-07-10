@@ -119,7 +119,7 @@ function Dashboard(props) {
             </select>
           </Typography>
           <Typography variant='h5' className='center'>
-            Điểm dừng hiệp 4: <select ref={scoreForStopFourRound}>
+            Điểm dừng hiệp 4: <select ref={scoreForStopFourRound} defaultValue="1">
               <Minutes />
             </select>
           </Typography>
