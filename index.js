@@ -134,6 +134,7 @@ function processTimer() {
     timerState = false;
     matches[current_match].round++;
     updateInforScreen();
+    main_timer = setTimeout(processMainTimer, 500);
   }
 }
 
@@ -161,6 +162,7 @@ function processMainTimer() {
     } else if (match.red_user.scores < match.blue_user.scores) {
       match.blue_user.won++;
     }
+    matches[current_match] = match;
     updateInforScreen();
     if (match.round == 3 && match.red_user.won != match.blue_user.won) {
       save_excel_file();
@@ -185,6 +187,7 @@ function onHandleCaringAndConsidering() {
 io.on("connection", (socket) => {
   console.log("Có kết nối từ người dùng!");
 
+  socket.emit("time", "2:00");
   socket.emit("match", {
     ...matches[current_match],
     match: {
@@ -259,6 +262,8 @@ io.on("connection", (socket) => {
 
   socket.on("caring", () => onHandleCaringAndConsidering());
   socket.on("considering", () => onHandleCaringAndConsidering());
+
+  socket.on("clear_score", () => {});
 });
 
 server.listen(PORT, () => {

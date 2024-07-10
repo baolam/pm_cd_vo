@@ -33,7 +33,8 @@ function Dashboard(props) {
     onClearScore,
     onRestart,
     onChangeScore,
-    onChangeGamJeom 
+    onChangeGamJeom,
+    disabled 
   } = props;
 
   const gatherInput = () => {
@@ -56,6 +57,7 @@ function Dashboard(props) {
               <Grid item xs={6}>
                 {/* Cần cài đặt để gửi một số thông tin về server */}
                 <Button 
+                  disabled={disabled.start}
                   onClick={
                     () => {
                       // console.log(minuteRound.current.value);
@@ -70,6 +72,7 @@ function Dashboard(props) {
               </Grid>
               <Grid item xs={6}>
                 <Button 
+                  disabled={disabled.caring}
                   onClick={onStopForCaring}
                   fullWidth 
                   variant='contained' 
@@ -88,6 +91,7 @@ function Dashboard(props) {
                 </Grid>
                 <Grid item xs={6}>
                   <Button 
+                    disabled={disabled.considering}
                     onClick={onStopForConsidering}
                     fullWidth 
                     variant='contained' 
@@ -97,6 +101,7 @@ function Dashboard(props) {
             </Grid>
           </Grid>
           <Button 
+            disabled={disabled.clear_score}
             onClick={onClearScore}
             fullWidth 
             variant='contained' 
@@ -220,14 +225,14 @@ function Dashboard(props) {
                   <Grid item className='dashboard_center'>
                     <Button onClick={
                       () => {
-                        onChangeGamJeom("B", 1);
+                        onChangeGamJeom("R", 1);
                       }
                     } variant='contained'>+</Button>
                   </Grid>
                   <Grid item className='dashboard_center'>
                     <Button disabled onClick={
                       () => {
-                        onChangeGamJeom("B", -1);
+                        onChangeGamJeom("R", -1);
                       }
                     }>- -</Button>
                   </Grid>
@@ -305,7 +310,8 @@ Dashboard.propTypes = {
   onRestart : PropTypes.func.isRequired,
   onClearScore : PropTypes.func.isRequired,
   onChangeScore : PropTypes.func.isRequired,
-  onChangeGamJeom : PropTypes.func.isRequired
+  onChangeGamJeom : PropTypes.func.isRequired,
+  disabled : PropTypes.object.isRequired
 };
 
 export default Dashboard;

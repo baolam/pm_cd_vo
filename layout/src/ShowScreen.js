@@ -23,20 +23,16 @@ function ShowScreen() {
     setMatchInfor(infor.match);
   };
 
-  const onUpdateMatch = (infor) => {
-    onSetMatch(infor);
-  };
-
   useEffect(() => {
     if (!socket.connected) socket.connect();
     socket.on("time", onSetTime);
     socket.on("match", onSetMatch);
-    socket.on("content", onUpdateMatch);
+    socket.on("content", onSetMatch);
 
     return () => {
       socket.off("time", onSetTime);
       socket.off("match", onSetMatch);
-      socket.off("content", onUpdateMatch);
+      socket.off("content", onSetMatch);
       socket.disconnect();
     };
   }, []);

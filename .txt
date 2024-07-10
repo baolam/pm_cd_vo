@@ -5,3 +5,7 @@ gam_jeom --> lỗi (1 lỗi, bù điểm đối phương)
 /// Một trận gồm nhiều hiệp (round)
 Nguyên lí
 Kết thúc một hiệp, tổng kết lại điểm --> cập nhật won
+
+/// Tổ hợp trạng thái disabled
+Khi chưa bấm bắt đầu -> (dừng săn sóc / dừng xem xét bị vô hiệu)
+Khi bấm dừng săn sóc hoặc dừng xem xét -> bắt đầu bị vô hiệu
