@@ -82,6 +82,14 @@ function __openTimeout() {
 
 /**
  * @description
+ * Lưu trữ file
+ */
+function save_excel_file() {
+  console.log("Lưu thông tin vào file!");
+}
+
+/**
+ * @description
  * Cập nhật các thông tin (điểm số, bàn thắng, thua) cho toàn bộ người dùng
  */
 function updateInforScreen() {
@@ -148,17 +156,15 @@ function processMainTimer() {
     timerState = true;
     // Phần chuẩn bị xử lí hiệp mới
     let match = matches[current_match];
-    if (match.round == 3) {
-      if (match.red_user.scores > match.blue_user.scores) {
-        match.red_user.won++;
-        if (current_match < matches.length - 1) current_match++;
-      } else if (match.red_user.scores < match.blue_user.scores) {
-        match.blue_user.won++;
-        if (current_match < matches.length - 1) current_match++;
-      }
+    if (match.red_user.scores > match.blue_user.scores) {
+      match.red_user.won++;
+    } else if (match.red_user.scores < match.blue_user.scores) {
+      match.blue_user.won++;
     }
     updateInforScreen();
-    timer = setTimeout(processTimer, 500);
+    if (match.round == 3 && match.red_user.won != match.blue_user.won) {
+      save_excel_file();
+    } else timer = setTimeout(processTimer, 500);
   }
 }
 
@@ -206,6 +212,7 @@ io.on("connection", (socket) => {
 
     if (matches[current_match].round == 4) {
       console.log("Xử lí trường hợp hiệp 4 có ghi nhận kết quả!");
+      __clearTimeout();
     } else {
       if (infor.score == -1 && target_user.scores > 0) target_user.scores--;
       if (infor.score != -1) {
