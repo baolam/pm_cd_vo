@@ -70,6 +70,16 @@ app.use((_req, res) => {
   res.sendFile(__dirname + "/layout/build/index.html");
 });
 
+function __clearTimeout() {
+  if (timerState) clearTimeout(timer);
+  else clearTimeout(main_timer);
+}
+
+function __openTimeout() {
+  if (timerState) timer = setTimeout(processTimer, 500);
+  else main_timer = setTimeout(processMainTimer, 500);
+}
+
 /**
  * @description
  * Cập nhật các thông tin (điểm số, bàn thắng, thua) cho toàn bộ người dùng
@@ -112,10 +122,9 @@ function processTimer() {
     timer = setTimeout(processTimer, 500);
   } else {
     // Tinh chỉnh thời gian chuyển hiệp (round mới)
-    matches[current_match].round++;
     current_time = memory_time;
     timerState = false;
-
+    matches[current_match].round++;
     updateInforScreen();
   }
 }
@@ -137,13 +146,20 @@ function processMainTimer() {
     // Thời gian nghỉ giữa hiệp
     current_time = preparation_time;
     timerState = true;
+    // Phần chuẩn bị xử lí hiệp mới
+    let match = matches[current_match];
+    if (match.round == 3) {
+      if (match.red_user.scores > match.blue_user.scores) {
+        match.red_user.won++;
+        if (current_match < matches.length - 1) current_match++;
+      } else if (match.red_user.scores < match.blue_user.scores) {
+        match.blue_user.won++;
+        if (current_match < matches.length - 1) current_match++;
+      }
+    }
+    updateInforScreen();
     timer = setTimeout(processTimer, 500);
   }
-}
-
-function __clearTimeout() {
-  if (timerState) clearTimeout(timer);
-  else clearTimeout(main_timer);
 }
 
 function onHandleCaringAndConsidering() {
@@ -154,8 +170,7 @@ function onHandleCaringAndConsidering() {
   }
   if (interuptState == 2) {
     interuptState = 0;
-    if (timerState) timer = setTimeout(processTimer, 500);
-    else main_timer = setTimeout(processMainTimer, 500);
+    __openTimeout();
     pauseTime = false;
   }
   updateInforScreen();
