@@ -225,7 +225,7 @@ function Dashboard(props) {
                     } variant='contained'>+</Button>
                   </Grid>
                   <Grid item className='dashboard_center'>
-                    <Button onClick={
+                    <Button disabled onClick={
                       () => {
                         onChangeGamJeom("B", -1);
                       }
@@ -281,7 +281,7 @@ function Dashboard(props) {
                     } variant='contained'>+</Button>
                   </Grid>
                   <Grid item className='dashboard_center'>
-                    <Button onClick={
+                    <Button disabled onClick={
                       () => {
                         onChangeGamJeom("B", -1);
                       }

@@ -28,6 +28,7 @@ function read_excel_file() {
         hits: 0,
         won: 0,
         team: "CLB",
+        scores: 0,
       },
       blue_user: {
         name: "Another",
@@ -36,6 +37,7 @@ function read_excel_file() {
         hits: 0,
         won: 0,
         team: "CLB",
+        scores: 0,
       },
       round: 1, // Thông tin tự cập nhật
     },
@@ -136,6 +138,52 @@ io.on("connection", (socket) => {
 
   socket.on("end_round", () => {
     clearTimeout(timer);
+  });
+
+  socket.on("update_score", (infor) => {
+    let target_user = matches[current_match].red_user;
+    if (infor.code == "B") target_user = matches[current_match].blue_user;
+
+    if (infor.score == -1 && target_user.scores > 0) target_user.scores--;
+    if (infor.score != -1) {
+      target_user.scores++;
+      target_user.hits++;
+    }
+
+    if (infor.code == "R") matches[current_match].red_user = target_user;
+    else matches[current_match].blue_user = target_user;
+
+    updateInforScreen();
+  });
+
+  socket.on("update_gam_jeom", (infor) => {
+    let target_user = matches[current_match].red_user;
+    let guest = matches[current_match].blue_user;
+    if (infor.code == "B") {
+      let tmp = target_user;
+      target_user = guest;
+      guest = tmp;
+    }
+
+    if (infor.error == 1) {
+      target_user.gam_jeom++;
+      guest.scores++;
+    } else {
+      if (target_user.gam_jeom > 0) {
+        target_user.gam_jeom--;
+        guest.scores--;
+      }
+    }
+
+    if (infor.code == "R") {
+      matches[current_match].red_user = target_user;
+      matches[current_match].blue_user = guest;
+    } else {
+      matches[current_match].red_user = guest;
+      matches[current_match].blue_user = target_user;
+    }
+
+    updateInforScreen();
   });
 });
 

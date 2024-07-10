@@ -43,7 +43,7 @@ function HienThi(props) {
             <Grid item xs={(12 - mainScorePropo) / 2} className='do_dam'>
               <Typography style={{
                 fontSize : "15rem"
-              }} variant={mainTitle} component={mainTitle}>0</Typography>
+              }} variant={mainTitle} component={mainTitle}>{red_user.scores}</Typography>
             </Grid>
             <Grid item xs={mainScorePropo} className='den'>
               <Typography variant={imTitle} className='center' style={{
@@ -65,7 +65,7 @@ function HienThi(props) {
             <Grid item xs={(12 - mainScorePropo) / 2} className='xanh_dam'>
               <Typography style={{
                 fontSize : "15rem"
-              }} variant={mainTitle} component={mainTitle} >0</Typography>
+              }} variant={mainTitle} component={mainTitle} >{blue_user.scores}</Typography>
             </Grid>
           </Grid>
           <Grid container className='footer'>
@@ -120,7 +120,8 @@ function HienThi(props) {
  *  gam_jeom : ....,
  *  hits : ....,
  *  won : ...,
- *  team : ...
+ *  team : ...,
+ *  scores : ...
  * }
  * 
  */

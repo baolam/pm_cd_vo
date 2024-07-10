@@ -4,6 +4,7 @@ export const default_red_user = {
   hits: 0,
   won: 1,
   team: "CLB",
+  scores: 1,
 };
 
 export const default_blue_user = {
@@ -12,6 +13,7 @@ export const default_blue_user = {
   hits: 0,
   won: 1,
   team: "CLB",
+  scores: 1,
 };
 
 export const default_match_infor = {
