@@ -53,7 +53,7 @@ console.log("-----------------------------------------------------");
 
 // Thông tin dùng quản lí
 // --------------------------------------
-var timer; // Biến dùng để quản lí timeout
+var main_timer; // Biến dùng để quản lí timeout
 var current_match = 0;
 var current_time = 0,
   memory_time = 0;
@@ -104,7 +104,7 @@ function processTimer() {
   if (current_time > 0) {
     showTime();
     pauseTime = !pauseTime;
-    timer = setTimeout(processTimer, 500);
+    main_timer = setTimeout(processTimer, 500);
   } else {
     current_time = memory_time;
     matches[current_match].round++;
@@ -133,11 +133,11 @@ io.on("connection", (socket) => {
     memory_time = infor.timeRound;
     preparation_time = infor.preparation_time;
     round_4_score = infor.round_4;
-    timer = setTimeout(processTimer, 500);
+    main_timer = setTimeout(processTimer, 500);
   });
 
   socket.on("end_round", () => {
-    clearTimeout(timer);
+    clearTimeout(main_timer);
   });
 
   socket.on("update_score", (infor) => {
