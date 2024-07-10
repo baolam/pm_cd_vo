@@ -53,13 +53,16 @@ console.log("-----------------------------------------------------");
 
 // Thông tin dùng quản lí
 // --------------------------------------
-var main_timer; // Biến dùng để quản lí timeout
+var main_timer, timer; // Biến dùng để quản lí timeout
 var current_match = 0;
 var current_time = 0,
+  preparation_time = 0,
   memory_time = 0;
-var preparation_time = 0;
+var turnDot = false; // Biến dùng để tinh chỉnh dấu : ở thời gian
+var pauseTime = false; // Biến được dùng khi thời gian bị dừng
+var interuptState = 0; // Biến dùng để điều khiển trạng thái của nút bấm săn sóc và xem xét
+var timerState = false; // Biến chỉ trạng thái timer (false --> mainTimer, true --> timer)
 var round_4_score = 0;
-var pauseTime = false; // Biến làm nhấp nháy dấu : ở thời gian
 // ----------------------------------------
 
 app.use("/", express.static(__dirname + "/layout/build"));
@@ -77,6 +80,7 @@ function updateInforScreen() {
     match: {
       match: current_match + 1,
       round: matches[current_match].round,
+      pauseTime,
     },
   });
 }
@@ -89,31 +93,72 @@ function showTime() {
   let second = current_time % 60;
   let minute = (current_time - second) / 60;
   let time = `${minute}:${second}`;
-  if (pauseTime) time = `${minute} ${second}`;
+  if (turnDot) time = `${minute} ${second}`;
   io.sockets.emit("time", time);
 }
 
 /**
  * @description
- * Hàm dùng để xử lí thời gian
+ * Thủ tục xử lí thời gian phụ
+ * Chạy thời gian nghỉ giữa hiệp
  */
 function processTimer() {
-  if (!pauseTime) {
+  if (!turnDot) {
     current_time--;
   }
   if (current_time > 0) {
     showTime();
-    pauseTime = !pauseTime;
-    main_timer = setTimeout(processTimer, 500);
+    turnDot = !turnDot;
+    timer = setTimeout(processTimer, 500);
   } else {
-    current_time = memory_time;
+    // Tinh chỉnh thời gian chuyển hiệp (round mới)
     matches[current_match].round++;
-    if (matches[current_match].round >= 3) {
-      // Tiến hành xử lí kết thúc trận đấu...
-      // Xử lí dựa vào tình trạng điểm số hiện tại
-      current_time = 0;
-    }
+    current_time = memory_time;
+    timerState = false;
+
+    updateInforScreen();
   }
+}
+
+/**
+ * @description
+ * Thủ tục xử lí thời gian chính
+ * Chạy biến chính (thời gian trận đấu)
+ */
+function processMainTimer() {
+  if (!turnDot) {
+    current_time--;
+  }
+  if (current_time > 0) {
+    showTime();
+    turnDot = !turnDot;
+    main_timer = setTimeout(processMainTimer, 500);
+  } else {
+    // Thời gian nghỉ giữa hiệp
+    current_time = preparation_time;
+    timerState = true;
+    timer = setTimeout(processTimer, 500);
+  }
+}
+
+function __clearTimeout() {
+  if (timerState) clearTimeout(timer);
+  else clearTimeout(main_timer);
+}
+
+function onHandleCaringAndConsidering() {
+  interuptState++;
+  if (interuptState == 1) {
+    __clearTimeout();
+    pauseTime = true;
+  }
+  if (interuptState == 2) {
+    interuptState = 0;
+    if (timerState) timer = setTimeout(processTimer, 500);
+    else main_timer = setTimeout(processMainTimer, 500);
+    pauseTime = false;
+  }
+  updateInforScreen();
 }
 
 io.on("connection", (socket) => {
@@ -133,21 +178,25 @@ io.on("connection", (socket) => {
     memory_time = infor.timeRound;
     preparation_time = infor.preparation_time;
     round_4_score = infor.round_4;
-    main_timer = setTimeout(processTimer, 500);
+    main_timer = setTimeout(processMainTimer, 500);
   });
 
   socket.on("end_round", () => {
-    clearTimeout(main_timer);
+    __clearTimeout();
   });
 
   socket.on("update_score", (infor) => {
     let target_user = matches[current_match].red_user;
     if (infor.code == "B") target_user = matches[current_match].blue_user;
 
-    if (infor.score == -1 && target_user.scores > 0) target_user.scores--;
-    if (infor.score != -1) {
-      target_user.scores++;
-      target_user.hits++;
+    if (matches[current_match].round == 4) {
+      console.log("Xử lí trường hợp hiệp 4 có ghi nhận kết quả!");
+    } else {
+      if (infor.score == -1 && target_user.scores > 0) target_user.scores--;
+      if (infor.score != -1) {
+        target_user.scores++;
+        target_user.hits++;
+      }
     }
 
     if (infor.code == "R") matches[current_match].red_user = target_user;
@@ -185,6 +234,9 @@ io.on("connection", (socket) => {
 
     updateInforScreen();
   });
+
+  socket.on("caring", () => onHandleCaringAndConsidering());
+  socket.on("considering", () => onHandleCaringAndConsidering());
 });
 
 server.listen(PORT, () => {
