@@ -236,11 +236,14 @@ io.on("connection", (socket) => {
     if (infor.score != -1) {
       target_user.scores++;
       target_user.hits++;
-    }
 
-    if (matches[current_match].round == 4) {
-      console.log("Xử lí trường hợp hiệp 4 có ghi nhận kết quả!");
-      __clearTimeout();
+      if (matches[current_match].round == 4) {
+        console.log("Xử lí trường hợp hiệp 4 có ghi nhận kết quả!");
+        target_user.scores--;
+        target_user.scores += round_4_score;
+        /// Phần chuẩn bị xử lí hiệp mới
+        // __clearTimeout();
+      }
     }
 
     if (infor.code == "R") matches[current_match].red_user = target_user;
