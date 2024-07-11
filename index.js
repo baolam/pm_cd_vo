@@ -192,6 +192,7 @@ function onHandleCaringAndConsidering() {
   interuptState++;
   if (interuptState == 1) {
     __clearTimeout();
+    showTime(true);
     pauseTime = true;
   }
   if (interuptState == 2) {
@@ -225,6 +226,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("end_round", () => {
+    //console.log(timerState);
     __clearTimeout();
   });
 

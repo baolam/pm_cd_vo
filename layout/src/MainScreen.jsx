@@ -9,6 +9,12 @@ function MainScreen() {
   const [disabledConsidering, setDisabledConsidering] = useState(true);
   const [disabledClearScore, setDisabledClearScore] = useState(false);
   const [stateCareAndCon, setStateCareAndCon] = useState(0);
+  const [rName, setRName] = useState('');
+  const [bName, setBName] = useState('');
+  const [rScore, setRScore] = useState(0);
+  const [bScore, setBScore] = useState(0);
+  const [rGamJeom, setRGamJeom] = useState(0);
+  const [bGamJeom, setBGamJeom] = useState(0);
 
   const onStart = (advanced_input) => {
     // console.log("Bắt đầu trận đấu");
@@ -93,13 +99,29 @@ function MainScreen() {
     setDisabledConsidering(false);
   };
 
+  const onSetMatch = (infor) => {
+    setRName(infor.red_user.name);
+    setBName(infor.blue_user.name);
+  };
+
+  const onContent = (infor) => {
+    setRScore(infor.red_user.scores);
+    setRGamJeom(infor.red_user.gam_jeom);
+    setBScore(infor.blue_user.scores);
+    setBGamJeom(infor.blue_user.gam_jeom);
+  }
+
   useEffect(() => {
     socket.on("out_match", outMatch);
     socket.on("in_match", inMatch);
+    socket.on("match", onSetMatch);
+    socket.on("content", onContent);
 
     return () => {
       socket.off("out_match", outMatch);
       socket.off("in_match", inMatch);
+      socket.off("match", onSetMatch);
+      socket.off("content", onContent);
     }
   }, []);
 
@@ -121,6 +143,12 @@ function MainScreen() {
           considering : disabledConsidering,
           clear_score : disabledClearScore
         }}
+        rName={rName}
+        rScore={rScore}
+        rGamJeom={rGamJeom}
+        bName={bName}
+        bScore={bScore}
+        bGamJeom={bGamJeom}
       />
     </>
   );

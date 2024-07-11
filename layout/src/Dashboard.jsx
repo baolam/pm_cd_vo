@@ -34,7 +34,9 @@ function Dashboard(props) {
     onRestart,
     onChangeScore,
     onChangeGamJeom,
-    disabled 
+    disabled,
+    rScore, rName, rGamJeom,
+    bScore, bName, bGamJeom 
   } = props;
 
   const gatherInput = () => {
@@ -187,12 +189,21 @@ function Dashboard(props) {
             <TableRow>
               <TableCell align='center' style={{ color : "red", fontWeight : "bold", fontSize : "1rem" }} >Đỏ</TableCell>
               <TableCell>
-                <TextField className='custom_tf' />
+                <TextField 
+                  value={rName} 
+                  className='custom_tf' 
+                />
               </TableCell>
               <TableCell>
                 <Grid container spacing={1}>
                   <Grid item>
-                    <TextField type='number' defaultValue={0} className='custom_tf' />
+                    <TextField 
+                      disabled
+                      value={rScore}
+                      type='number' 
+                      // defaultValue={0} 
+                      className='custom_tf' 
+                    />
                   </Grid>
                   <Grid item className='dashboard_center'>
                     <Button onClick={
@@ -220,7 +231,13 @@ function Dashboard(props) {
               <TableCell>
                 <Grid container spacing={1}>
                   <Grid item>
-                    <TextField type='number' defaultValue={0} className='custom_tf' />
+                    <TextField 
+                      disabled
+                      type='number' 
+                      // defaultValue={0} 
+                      value={rGamJeom}
+                      className='custom_tf' 
+                    />
                   </Grid>
                   <Grid item className='dashboard_center'>
                     <Button onClick={
@@ -243,12 +260,21 @@ function Dashboard(props) {
             <TableRow>
               <TableCell align='center' style={{ color : "blue", fontWeight : "bold", fontSize : "1rem" }}>Xanh</TableCell>
               <TableCell>
-                <TextField className='custom_tf' />
+                <TextField 
+                  value={bName} 
+                  className='custom_tf' 
+                />
               </TableCell>
               <TableCell>
                 <Grid container spacing={1}>
                   <Grid item>
-                    <TextField type='number' defaultValue={0} className='custom_tf' />
+                    <TextField
+                      disabled 
+                      type='number' 
+                      // defaultValue={0} 
+                      value={bScore}
+                      className='custom_tf' 
+                    />
                   </Grid>
                   <Grid item className='dashboard_center'>
                     <Button onClick={
@@ -276,7 +302,13 @@ function Dashboard(props) {
               <TableCell>
                 <Grid container spacing={1}>
                   <Grid item>
-                    <TextField type='number' defaultValue={0} className='custom_tf' />
+                    <TextField 
+                      disabled
+                      type='number' 
+                      value={bGamJeom}
+                      // defaultValue={0} 
+                      className='custom_tf' 
+                    />
                   </Grid>
                   <Grid item className='dashboard_center'>
                     <Button onClick={
@@ -311,7 +343,13 @@ Dashboard.propTypes = {
   onClearScore : PropTypes.func.isRequired,
   onChangeScore : PropTypes.func.isRequired,
   onChangeGamJeom : PropTypes.func.isRequired,
-  disabled : PropTypes.object.isRequired
+  disabled : PropTypes.object.isRequired,
+  rScore : PropTypes.number.isRequired,
+  bScore : PropTypes.number.isRequired,
+  rName : PropTypes.string.isRequired,
+  bName : PropTypes.string.isRequired,
+  rGamJeom : PropTypes.number.isRequired,
+  bGamJeom : PropTypes.number.isRequired
 };
 
 export default Dashboard;
