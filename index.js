@@ -282,7 +282,25 @@ io.on("connection", (socket) => {
   socket.on("caring", () => onHandleCaringAndConsidering());
   socket.on("considering", () => onHandleCaringAndConsidering());
 
-  socket.on("clear_score", () => {});
+  socket.on("clear_score", () => {
+    let match = matches[current_match];
+    match.red_user = {
+      ...match.red_user,
+      hits: 0,
+      gam_jeom: 0,
+      won: 0,
+      scores: 0,
+    };
+    match.blue_user = {
+      ...match.blue_user,
+      hits: 0,
+      gam_jeom: 0,
+      won: 0,
+      scores: 0,
+    };
+    matches[current_match] = match;
+    updateInforScreen();
+  });
 });
 
 server.listen(PORT, () => {
