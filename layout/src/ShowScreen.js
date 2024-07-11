@@ -5,10 +5,11 @@ import {
   default_red_user,
   default_blue_user,
   default_match_infor,
+  default_time,
 } from "./components/cfg";
 
 function ShowScreen() {
-  const [time, setTime] = useState("2:00");
+  const [time, setTime] = useState(default_time);
   const [redInfor, setRedInfor] = useState(default_red_user);
   const [blueInfor, setBlueInfor] = useState(default_blue_user);
   const [matchInfor, setMatchInfor] = useState(default_match_infor);

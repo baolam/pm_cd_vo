@@ -52,7 +52,10 @@ function HienThi(props) {
               <Typography variant="h2" className='center'>{match}</Typography>
               <Typography variant="h2" style={{ color : pauseTime ? "#F8F905" : "white", marginRight : "1px" }} 
                 className='center time'>
-                  <span style={{ fontSize : "6.5rem" }} >{time}</span>
+                  {/* <span style={{ fontSize : "6.5rem" }} >{time}</span> */}
+                  <span style={{ fontSize : "6.5rem" }}>{time.minute}</span>
+                  <span style={{ fontSize : "6.5rem", color : !time.turnDot ? "transparent" : "white" }}>:</span>
+                  <span style={{ fontSize : "6.5rem" }}>{time.second}</span>
                   {pauseTime && 
                     <Typography 
                       variant={imTitle}
@@ -129,7 +132,7 @@ function HienThi(props) {
 HienThi.propTypes = {
   red_user : PropTypes.object.isRequired,
   blue_user : PropTypes.object.isRequired,
-  time : PropTypes.string.isRequired, // Thời gian đếm ngược
+  time : PropTypes.object.isRequired, // Thời gian đếm ngược
   pauseTime : PropTypes.bool.isRequired,
   match : PropTypes.number.isRequired, // Trận đấu bao nhiêu
   round : PropTypes.number.isRequired // Vòng nào

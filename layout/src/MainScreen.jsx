@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Dashboard from "./Dashboard";
 import ShowScreen from "./ShowScreen";
 import { socket } from "./socket";
@@ -82,6 +82,26 @@ function MainScreen() {
       code, error
     });
   };
+
+  const outMatch = () => {
+    setDisabledCaring(true);
+    setDisabledConsidering(true);
+  };
+
+  const inMatch = () => {
+    setDisabledCaring(false);
+    setDisabledConsidering(false);
+  };
+
+  useEffect(() => {
+    socket.on("out_match", outMatch);
+    socket.on("in_match", inMatch);
+
+    return () => {
+      socket.off("out_match", outMatch);
+      socket.off("in_match", inMatch);
+    }
+  }, []);
 
   return (
     <>

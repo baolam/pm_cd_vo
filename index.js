@@ -104,15 +104,21 @@ function updateInforScreen() {
 }
 
 /**
+ *
+ * @param {*} compul_dot - trạng thái bắt buộc có dấu chấm
  * @description
  * Thủ tục xử lí thời gian thành chuỗi rồi gửi
  */
-function showTime() {
+function showTime(compul_dot = false) {
   let second = current_time % 60;
+  if (0 <= second && second <= 9) second = "0" + String(second);
   let minute = (current_time - second) / 60;
-  let time = `${minute}:${second}`;
-  if (turnDot) time = `${minute} ${second}`;
-  io.sockets.emit("time", time);
+  // if (0 <= minute && minute <= 9) minute = "0" + String(minute);
+  io.sockets.emit("time", {
+    minute,
+    second,
+    turnDot: compul_dot ? true : turnDot,
+  });
 }
 
 /**
@@ -134,6 +140,8 @@ function processTimer() {
     timerState = false;
     matches[current_match].round++;
     updateInforScreen();
+    showTime(true);
+    io.sockets.emit("in_match");
     main_timer = setTimeout(processMainTimer, 500);
   }
 }
@@ -165,8 +173,18 @@ function processMainTimer() {
     matches[current_match] = match;
     updateInforScreen();
     if (match.round == 3 && match.red_user.won != match.blue_user.won) {
+      io.sockets.emit("time", { minute: 0, second: "00", turnDot: true });
       save_excel_file();
-    } else timer = setTimeout(processTimer, 500);
+    } else {
+      if (match.round == 4) {
+        io.sockets.emit("time", { minute: 0, second: "00", turnDot: true });
+        console.log("Kết thúc hiệp 4, hòa điểm!");
+      } else {
+        showTime(true);
+        io.sockets.emit("out_match"); // Dùng để khóa một số phím chức năng
+        timer = setTimeout(processTimer, 500);
+      }
+    }
   }
 }
 
@@ -187,7 +205,8 @@ function onHandleCaringAndConsidering() {
 io.on("connection", (socket) => {
   console.log("Có kết nối từ người dùng!");
 
-  socket.emit("time", "2:00");
+  // socket.emit("time", "2:00");
+  socket.emit("time", { minute: 2, second: "00", turnDot: true });
   socket.emit("match", {
     ...matches[current_match],
     match: {
@@ -213,15 +232,15 @@ io.on("connection", (socket) => {
     let target_user = matches[current_match].red_user;
     if (infor.code == "B") target_user = matches[current_match].blue_user;
 
+    if (infor.score == -1 && target_user.scores > 0) target_user.scores--;
+    if (infor.score != -1) {
+      target_user.scores++;
+      target_user.hits++;
+    }
+
     if (matches[current_match].round == 4) {
       console.log("Xử lí trường hợp hiệp 4 có ghi nhận kết quả!");
       __clearTimeout();
-    } else {
-      if (infor.score == -1 && target_user.scores > 0) target_user.scores--;
-      if (infor.score != -1) {
-        target_user.scores++;
-        target_user.hits++;
-      }
     }
 
     if (infor.code == "R") matches[current_match].red_user = target_user;

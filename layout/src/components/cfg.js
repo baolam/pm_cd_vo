@@ -21,3 +21,9 @@ export const default_match_infor = {
   round: 1,
   pauseTime: false,
 };
+
+export const default_time = {
+  minute: 2,
+  second: "00",
+  turnDot: true,
+};
