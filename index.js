@@ -14,42 +14,46 @@ const io = new socketio.Server(server, {
 
 /// Một số thông số quan trọng
 const PORT = process.env.PORT || 4000;
-const EXCEL_FILE = "";
+const EXCEL_FILE = __dirname + "/matches.xlsx";
 
 /// Phần chương trình xử lí file excel
 console.log(`Đang tiến hành đọc và xử lí file excel ${EXCEL_FILE}!`);
-function read_excel_file() {
-  return [
-    {
-      red_user: {
-        name: "Person",
-        hits: 0,
-        gam_jeom: 0,
-        hits: 0,
-        won: 0,
-        team: "CLB",
-        scores: 0,
-      },
-      blue_user: {
-        name: "Another",
-        hits: 0,
-        gam_jeom: 0,
-        hits: 0,
-        won: 0,
-        team: "CLB",
-        scores: 0,
-      },
-      round: 1, // Thông tin tự cập nhật
-    },
-  ];
+function __build_infor_user(name, team) {
+  return {
+    name,
+    team,
+    hits: 0,
+    gam_jeom: 0,
+    scores: 0,
+    won: 0,
+  };
 }
 
-const matches = read_excel_file();
+function read_excel_file() {
+  let workbook = xlsx.readFile(EXCEL_FILE);
+  let worksheet = workbook.Sheets["tran_dau"];
+  let _matches = xlsx.utils.sheet_to_json(worksheet, {
+    raw: true,
+    range: `A3:E${3 + worksheet["G1"].v}`,
+  });
+  let matches = [];
+  for (let i = 0; i < _matches.length; i++) {
+    let match = _matches[i];
+    let red_user = __build_infor_user(match["Tên đỏ"], match["Đội đỏ"]);
+    let blue_user = __build_infor_user(match["Tên xanh"], match["Đội xanh"]);
+    matches.push({ red_user, blue_user, round: 1 });
+  }
+  /// Phần hiển thị thông báo
+  console.log("Danh sách trận đấu nhận được...");
+  console.table(_matches);
+  console.log("-----------------------------------------------------");
+  return matches;
+}
+
 // Lưu ý:
 // Nếu file không đọc được
 // Chuyển đổi sang trạng thái người dùng tự do
-console.log("Hoàn thành xử lí");
-console.log("-----------------------------------------------------");
+const matches = read_excel_file();
 
 // Thông tin dùng quản lí
 // --------------------------------------
