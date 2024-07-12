@@ -50,11 +50,7 @@ function read_excel_file() {
   return matches;
 }
 
-// Lưu ý:
-// Nếu file không đọc được
-// Chuyển đổi sang trạng thái người dùng tự do
 const matches = read_excel_file();
-
 // Thông tin dùng quản lí
 // --------------------------------------
 var main_timer, timer; // Biến dùng để quản lí timeout
